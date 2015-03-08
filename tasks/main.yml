@@ -1,0 +1,18 @@
+---
+- name: make a build dir
+  file: state=directory name=/root/ganglia-master-dockerized
+
+- name: put Dockerfile
+  template: src=Dockerfile dest=/root/ganglia-master-dockerized/Dockerfile
+
+- name: put rc.local
+  template: src=rc.local dest=/root/ganglia-master-dockerized/rc.local
+
+#- name: put default
+#  template: src=default dest=/root/kibana-dockerized/default
+
+- name: build a Docker image for Ganglia-master
+  command: docker build -t gitinsky/ganglia-master:0.1.0 --rm /root/ganglia-master-dockerized
+
+- name: tag it as latest
+  command: docker build -t gitinsky/ganglia-master:latest --rm /root/ganglia-master-dockerized
